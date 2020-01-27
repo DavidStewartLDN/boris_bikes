@@ -4,17 +4,13 @@ describe DockingStation do
   context "check if release bike method exists" do
     it { is_expected.to respond_to(:release_bike)}
   end
-  context "check that release bike method to be working" do
-    it "is true" do
-      expect(subject.release_bike).to be_working
-    end
-  end
+80
   context "should be able to dock a bike" do
     it { is_expected.to respond_to(:dock).with(1).argument }
   end
   context "can show" do
     it "bike that has been docked" do
-      expect(subject).to respond_to(:bike)
+      expect(subject).to respond_to(:bikes)
     end
   end
   context "can return" do
@@ -26,10 +22,17 @@ describe DockingStation do
   it "returns a stored bike" do
     bike = Bike.new
     subject.dock(bike)
-    expect(subject.bike).to eq(bike)
+    expect(subject.bikes).to eq(bike)
   end
-  # it "should not release bike if empty" do
-  #   expect {subject.release_bike}.to raise_error("No bikes available")
-  # end
+  it "should not release bike if empty" do
+    expect {subject.release_bike}.to raise_error
+  end
+  it "should not allow bike to dock if docking station is full" do
+    bike = Bike.new
+    subject.dock(bike)
+    expect {subject.dock(bike)}.to raise_error
+  end
+  # it "Check if docking staion creates error when full"
+
 end
 # context "dock bike to docking station and update attribute of docking station instance"
